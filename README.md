@@ -77,8 +77,8 @@ You only need Python on Windows. The finished `.exe` runs anywhere with **no Pyt
 
 ```bash
 # 1) clone
-git clone https://github.com/<your-username>/TrafficMonitor.git
-cd TrafficMonitor
+git clone https://github.com/ormahim/Net_Speed_Meter-Traffic_Monitor.git
+cd Net_Speed_Meter-Traffic_Monitor
 
 # 2) build (double-click build.bat, or run it)
 build.bat
