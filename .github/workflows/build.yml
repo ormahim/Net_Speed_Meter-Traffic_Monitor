@@ -1,0 +1,48 @@
+name: Build Windows exe + installer
+
+# Builds TrafficMonitor in the cloud on a real Windows machine.
+# You need NO Python and NO tools on your own PC.
+#
+# How to use:
+#   1. Put this whole folder in a GitHub repo (it can be PRIVATE).
+#   2. Go to the repo's "Actions" tab -> run this workflow (or just push).
+#   3. When it finishes, open the run and download the "TrafficMonitor"
+#      artifact -> it contains both TrafficMonitor.exe and the Setup installer.
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:        # lets you run it manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install psutil pystray pillow pyinstaller
+
+      - name: Make the app icon
+        run: python make_icon.py
+
+      - name: Build standalone exe
+        run: pyinstaller --onefile --noconsole --noupx --name TrafficMonitor --icon icon.ico --hidden-import pystray._win32 monitor.py
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss'
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrafficMonitor
+          path: |
+            dist/TrafficMonitor.exe
+            installer/TrafficMonitor-Setup.exe
