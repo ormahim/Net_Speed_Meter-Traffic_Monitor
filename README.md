@@ -28,7 +28,7 @@ Live **download / upload** speed that floats on your desktop or sits right on th
   folder and replace the line below, e.g.:
   ![TrafficMonitor on the taskbar](docs/screenshot.png)
 -->
-> _Add a screenshot or short GIF here — it’s the single biggest thing that earns stars._ ⭐
+> 
 
 ---
 
